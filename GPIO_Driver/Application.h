@@ -25,6 +25,7 @@ void sevenSeg_DisplayNum(uint8 sevenSeg_for_display_num);
 void sevenSeg_Display(uint8 num, uint8 sevenSeg_for_display_num);
 
 void setup_LED_Direction(void);
-void LED_ON(void);
+void LED_ON(uint8 port_id,uint8 pin_num);
+void LED_OFF(uint8 port_id,uint8 pin_num);
 
 #endif /* APPLICATION_H_ */

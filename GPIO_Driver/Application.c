@@ -16,17 +16,13 @@ void setup_LED_Direction(void)
 
 }
 
-void LED_ON(void)
+void LED_ON(uint8 port_id,uint8 pin_num)
 {
-	GPIO_SetupPin_Value(PORTB,PB7,LOGIC_HIGH);
-	_delay_ms(1000);
-	GPIO_SetupPin_Value(PORTA,PA4,LOGIC_HIGH);
-	_delay_ms(1000);
-	GPIO_SetupPin_Value(PORTA,PA5,LOGIC_HIGH);
-	_delay_ms(1000);
-	GPIO_SetupPin_Value(PORTA,PA6,LOGIC_HIGH);
-	_delay_ms(1000);
-
+	GPIO_SetupPin_Value(port_id,pin_num,LOGIC_HIGH);
+}
+void LED_OFF(uint8 port_id,uint8 pin_num)
+{
+	GPIO_SetupPin_Value(port_id,pin_num,LOGIC_LOW);
 }
 
 

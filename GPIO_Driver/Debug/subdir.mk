@@ -5,16 +5,19 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Application.c \
+../BCD.c \
 ../GPIO_config.c \
 ../main.c 
 
 OBJS += \
 ./Application.o \
+./BCD.o \
 ./GPIO_config.o \
 ./main.o 
 
 C_DEPS += \
 ./Application.d \
+./BCD.d \
 ./GPIO_config.d \
 ./main.d 
 

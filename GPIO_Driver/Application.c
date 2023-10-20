@@ -7,22 +7,44 @@
 #include "GPIO_Config.h"
 #include "Application.h"
 
+void setup_LED_Direction(void)
+{
+	GPIO_SetupPin_Direction(DDRB,PB7, PIN_OUTPUT);
+	GPIO_SetupPin_Direction(DDRA,PA4, PIN_OUTPUT);
+	GPIO_SetupPin_Direction(DDRA,PA5, PIN_OUTPUT);
+	GPIO_SetupPin_Direction(DDRA,PA6, PIN_OUTPUT);
+
+}
+
+void LED_ON(void)
+{
+	GPIO_SetupPin_Value(PORTB,PB7,LOGIC_HIGH);
+	_delay_ms(1000);
+	GPIO_SetupPin_Value(PORTA,PA4,LOGIC_HIGH);
+	_delay_ms(1000);
+	GPIO_SetupPin_Value(PORTA,PA5,LOGIC_HIGH);
+	_delay_ms(1000);
+	GPIO_SetupPin_Value(PORTA,PA6,LOGIC_HIGH);
+	_delay_ms(1000);
+
+}
+
 
 void sevenSeg_setPin_direction(void)
 {
 	/*There are 4 7seg  ,all of them connected to PB0,PB1,PB2,PB4 */
 	/*They are connected as common Anode*/
 
-	GPIO_SetupPin_Direction(PORTB,PB5, PIN_OUTPUT); /*  7seg 2  connected */
-	GPIO_SetupPin_Direction(PORTB,PB6, PIN_OUTPUT); /*  7seg 1  connected */
-	GPIO_SetupPin_Direction(PORTA,PA2, PIN_OUTPUT); /*  7seg 3  connected */
-	GPIO_SetupPin_Direction(PORTA,PA3, PIN_OUTPUT); /*  7seg 4  connected */
+	GPIO_SetupPin_Direction(DDRB,PB5, PIN_OUTPUT); /*  7seg 2  connected */
+	GPIO_SetupPin_Direction(DDRB,PB6, PIN_OUTPUT); /*  7seg 1  connected */
+	GPIO_SetupPin_Direction(DDRA,PA2, PIN_OUTPUT); /*  7seg 3  connected */
+	GPIO_SetupPin_Direction(DDRA,PA3, PIN_OUTPUT); /*  7seg 4  connected */
 
 
-	GPIO_SetupPin_Direction(PORTB,PB0, PIN_OUTPUT);
-	GPIO_SetupPin_Direction(PORTB,PB1, PIN_OUTPUT);
-	GPIO_SetupPin_Direction(PORTB,PB2, PIN_OUTPUT);
-	GPIO_SetupPin_Direction(PORTB,PB4, PIN_OUTPUT);
+	GPIO_SetupPin_Direction(DDRB,PB0, PIN_OUTPUT);
+	GPIO_SetupPin_Direction(DDRB,PB1, PIN_OUTPUT);
+	GPIO_SetupPin_Direction(DDRB,PB2, PIN_OUTPUT);
+	GPIO_SetupPin_Direction(DDRB,PB4, PIN_OUTPUT);
 
 }
 

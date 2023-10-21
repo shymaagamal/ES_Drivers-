@@ -1,2 +1,10 @@
 # ES_Drivers-
-Contains Drivers for AVR MCU 
+Contains  
+LED Project
+LCD Project
+SevenSeg Project
+
+In Folder of Algorithms 
+* Bineary Search
+* Linear Search
+

@@ -10,14 +10,14 @@
 #define APPLICATION_H_
 
 
-
-
 #include "../MCAL/GPIO/GPIO_Config.h"
 #include <util/delay.h>
+
 #define DISPLAY_ON_SEG1 1
 #define DISPLAY_ON_SEG2 2
 #define DISPLAY_ON_SEG3 3
 #define DISPLAY_ON_SEG4 4
+
 /*Set direction for pins of 7seg to be output*/
 void sevenSeg_setPin_direction(void);
 

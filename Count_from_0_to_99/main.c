@@ -18,8 +18,7 @@ int  main(void)
 	uint8 countseg2=0;
 	while(1)
 	{
-		sevenSeg_Display(5,DISPLAY_ON_SEG1);
-		sevenSeg_Display(6,DISPLAY_ON_SEG2);
+
 		if(countseg1==9&&countseg2<9)
 		{
 			countseg2++;

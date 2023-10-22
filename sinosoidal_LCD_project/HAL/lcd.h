@@ -19,7 +19,7 @@
 /*******************************************************************************
  *                      Preprocessor Macros                                    *
  *******************************************************************************/
-
+#define CLEAR_COMMAND 0x01
 
 
 
@@ -30,6 +30,6 @@ void LCD_init(void);
 void LCD_writeCommand(uint8 command);
 void LCD_writeData(uint8 command);
 void LCD_goToRowColumn(uint8 row,uint8 col);
-
-
+void LCD_displayString(const char *Str);
+void LCD_clearScreen(void);
 #endif /* LCD_H_ */

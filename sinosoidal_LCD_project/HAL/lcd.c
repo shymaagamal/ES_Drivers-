@@ -65,17 +65,14 @@ void LCD_writeCommand(uint8 command)
 	 _delay_ms(2);
 
 
-		GPIO_SetupPin_Value(PORTB_ID,PB0,GET_BIT(command,0));
-		GPIO_SetupPin_Value(PORTB_ID,PB1,GET_BIT(command,1));
-		GPIO_SetupPin_Value(PORTB_ID,PB2,GET_BIT(command,2));
-		GPIO_SetupPin_Value(PORTB_ID,PB4,GET_BIT(command,3));
+	GPIO_SetupPin_Value(PORTB_ID,PB0,GET_BIT(command,0));
+	GPIO_SetupPin_Value(PORTB_ID,PB1,GET_BIT(command,1));
+	GPIO_SetupPin_Value(PORTB_ID,PB2,GET_BIT(command,2));
+	GPIO_SetupPin_Value(PORTB_ID,PB4,GET_BIT(command,3));
 
-		GPIO_SetupPin_Value(PORTA_ID,PA2,LOGIC_HIGH);/*EN*/
-		_delay_ms(2);
-		GPIO_SetupPin_Value(PORTA_ID,PA2,LOGIC_LOW);/*EN*/
-
-
-
+	GPIO_SetupPin_Value(PORTA_ID,PA2,LOGIC_HIGH);/*EN*/
+	_delay_ms(2);
+	GPIO_SetupPin_Value(PORTA_ID,PA2,LOGIC_LOW);/*EN*/
 	_delay_ms(2);
 }
 void LCD_writeData(uint8 command)
@@ -129,3 +126,16 @@ void LCD_goToRowColumn(uint8 row,uint8 col)
 	LCD_writeCommand(Address);
 }
 
+void LCD_displayString(const char *Str)
+{
+	uint8 i = 0;
+	while(Str[i] != '\0')
+	{
+		LCD_writeData(Str[i]);
+		i++;
+	}
+}
+void LCD_clearScreen(void)
+{
+	LCD_writeCommand(CLEAR_COMMAND); //clear display
+}

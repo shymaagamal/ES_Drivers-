@@ -41,25 +41,38 @@ void sevenSeg_DisplayNum(uint8 sevenSeg_for_display_num)
 	{
 	case 1:
 		GPIO_SetupPin_Value(PORTB_ID,PB6,LOGIC_LOW);
+		GPIO_SetupPin_Value(PORTB_ID,PB5,LOGIC_HIGH);
+		GPIO_SetupPin_Value(PORTA_ID,PA2,LOGIC_HIGH);
+		GPIO_SetupPin_Value(PORTA_ID,PA3,LOGIC_HIGH);
 
 		break;
 	case 2:
 
 		GPIO_SetupPin_Value(PORTB_ID,PB5,LOGIC_LOW);
+		GPIO_SetupPin_Value(PORTB_ID,PB6,LOGIC_HIGH);
+		GPIO_SetupPin_Value(PORTA_ID,PA2,LOGIC_HIGH);
+		GPIO_SetupPin_Value(PORTA_ID,PA3,LOGIC_HIGH);
 
 		break;
 	case 3:
 
 		GPIO_SetupPin_Value(PORTA_ID,PA2,LOGIC_LOW);
+		GPIO_SetupPin_Value(PORTB_ID,PB6,LOGIC_HIGH);
+		GPIO_SetupPin_Value(PORTB_ID,PB5,LOGIC_HIGH);
+		GPIO_SetupPin_Value(PORTA_ID,PA3,LOGIC_HIGH);
 
 		break;
 	case 4:
 
 		GPIO_SetupPin_Value(PORTA_ID,PA3,LOGIC_LOW);
+		GPIO_SetupPin_Value(PORTB_ID,PB6,LOGIC_HIGH);
+		GPIO_SetupPin_Value(PORTB_ID,PB5,LOGIC_HIGH);
+		GPIO_SetupPin_Value(PORTA_ID,PA2,LOGIC_HIGH);
+
 		break;
 	}
 
-
+_delay_ms(1);
 }
 /*Connection of SevenSegment is PB0,PB1,PB2,PB4*/
 void sevenSeg_Display(uint8 num ,uint8 sevenSeg_for_display_num)
@@ -130,4 +143,5 @@ void sevenSeg_Display(uint8 num ,uint8 sevenSeg_for_display_num)
 		GPIO_SetupPin_Value(PORTB_ID,4,LOGIC_HIGH);  /*PB4 high*/
 		break;
 	}
+	_delay_ms(1);
 }

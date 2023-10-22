@@ -7,6 +7,11 @@
 #ifndef GPIO_INTERFACE_H_
 #define GPIO_INTERFACE_H_
 
+#define F_CPU 16000000
+#include<util/delay.h>
+
+
+
 #define SET_BIT(REG,BIT_NUM)                         (REG|=(1<<BIT_NUM))
 
 #define CLEAR_BIT(REG,BIT_NUM)                       (REG &= ~(1<<BIT_NUM))

@@ -29,6 +29,6 @@
 void LCD_init(void);
 void LCD_writeCommand(uint8 command);
 void LCD_writeData(uint8 command);
-
+void LCD_goToRowColumn(uint8 row,uint8 col);
 
 #endif /* LCD_H_ */

@@ -8,6 +8,7 @@
 
 #include "HAL/KeyPad.h"
 #include "HAL/lcd.h"
+#include "util/delay.h"
 int  main(void)
 {
 	uint8 num=0XFF ;
@@ -18,8 +19,12 @@ int  main(void)
 	while(1)
 	{
 
-		 num=KeyPad_getPressedKey();
+		num=KeyPad_getPressedKey();
+
+		LCD_goToRowColumn(0,0);
 		LCD_writeData(num);
+
+
 	}
 
 

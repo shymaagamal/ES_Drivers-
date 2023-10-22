@@ -16,7 +16,7 @@
 					       {'13','14','15','16'},\
 						   {'17','18','19','20'}}
 
-
+#define KEYPAD_ROWS_PORT_ID   PORTC_ID
 #define NUMBER_OF_ROWS 4
 
 #define KEYPAD_ROW1 PC5
@@ -26,12 +26,11 @@
 
 #define KEYPAD_ROW_PINS  {KEYPAD_ROW1,KEYPAD_ROW2,KEYPAD_ROW3,KEYPAD_ROW4}
 
-#define KEYPAD_ROWS_PORT_ID   PORTC_ID
 
-#define KEYPAD_ROWS_PORT  PORTC
 
+
+#define KEYPAD_COLS_PORT  PIND
 #define NUMBER_OF_COLS 4
-
 
 #define KEYPAD_COL1 PD7
 #define KEYPAD_COL2 PD6

@@ -11,10 +11,10 @@
 #include "../MCAL/GPIO/GPIO_Config.h"
 
 
-#define KEYPAD_DATA       {{'1','2','3','4'} ,\
-					       {'9','10','11','12'},\
-					       {'13','14','15','16'},\
-						   {'17','18','19','20'}}
+#define KEYPAD_DATA       {{'7','8','9','+'} ,\
+					       {'6','5','4','-'},\
+					       {'3','2','1','*'},\
+						   {'A','0','C','%'}}
 
 #define KEYPAD_ROWS_PORT_ID   PORTC_ID
 #define NUMBER_OF_ROWS 4

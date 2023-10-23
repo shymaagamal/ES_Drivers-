@@ -45,10 +45,14 @@ uint8 KeyPad_getPressedKey()
 		GPIO_SetupPin_Value(KEYPAD_ROWS_PORT_ID,KeyPad_row_Pins[row],LOGIC_LOW);
 		for(uint8 col=0;col<NUMBER_OF_COLS;col++)
 		{
-			if(GET_BIT(KEYPAD_COLS_PORT,KeyPad_col_Pins[col])==LOGIC_LOW)
+
+
+			while(GET_BIT(KEYPAD_COLS_PORT,KeyPad_col_Pins[col])==LOGIC_LOW)
 			{
 				Data=KeyPad_data[row][col];
 			}
+
+
 		}
 		GPIO_SetupPin_Value(KEYPAD_ROWS_PORT_ID,KeyPad_row_Pins[row],LOGIC_HIGH);
 	}

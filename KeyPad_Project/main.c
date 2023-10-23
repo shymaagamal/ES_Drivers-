@@ -15,14 +15,18 @@ int  main(void)
 	LCD_init();
 	KeyPad_init();
 
-	LCD_writeData('S');
+
 	while(1)
 	{
 
 		num=KeyPad_getPressedKey();
 
-		LCD_goToRowColumn(0,0);
-		LCD_writeData(num);
+
+		if(num != 0xFF)
+		{
+			LCD_writeData(num);
+		}
+		//while(num != 0xFF);
 
 
 	}

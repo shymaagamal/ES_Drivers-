@@ -20,7 +20,7 @@ void ADC_init()
 
 	ADCSRA_REG->ADEN=ADC_EN;            /*ADC Enable*/
 
-	//ADCSRA_REG->ADIE=disable_INT;               /*ADC Interrupt Enable */
+	ADCSRA_REG->ADIE=EN_INT;               /*ADC Interrupt Enable */
 
 	ADCSRA_REG->ADATE=AutoTriggered;  /*ADC Auto Trigger Enable*/
 

@@ -33,7 +33,7 @@ int  main(void)
 	LCD_init();
 	ADC_selectChannel(ADC1);
 	GINT_Enable();
-	EXTI_Enable(INT0,NULL,rising_edge);
+	EXTI_Enable(INT0,NULL,falling_edge);
 
 	while(1)
 	{

@@ -17,20 +17,11 @@ uint16 result = 0;
 char data[10];
 
 
-void system_init()
-{
-	flag=1;
-	LCD_writeData('t');
-}
-
 
 void ADC_INT(void)
 {
-	LCD_writeData('k');
-	result = ADC_read_channel();
-	sprintf(data, "%d", result);
-	LCD_goToRowColumn(0, 0);
-	LCD_displayString(data);
+
+	flag=1;
 
 }
 
@@ -42,17 +33,19 @@ int  main(void)
 	LCD_init();
 	ADC_selectChannel(ADC1);
 	GINT_Enable();
-	EXTI_Enable(INT1,system_init,falling_edge);
+	EXTI_Enable(INT0,NULL,rising_edge);
 
 	while(1)
 	{
 		ADC_setCallBack(ADC_INT);
 		if(flag==1)
 		{
-			ADC_startConversionINT();
+			result = ADC_read_channel();
+			sprintf(data, "%d", result);
+			LCD_goToRowColumn(0, 0);
+			LCD_displayString(data);
 			flag=0;
 		}
-
 	}
 
 }

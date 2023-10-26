@@ -19,4 +19,5 @@ void ADC_selectChannel(MUX channel);
 uint16 ADC_read_channel(void);
 void ADC_startConversionPolling(void);
 void ADC_startConversionINT(void);
+void ADC_setCallBack(void (*callbackPtr)(void));
 #endif /* MCAL_ADC_ADC_INTERFACE_H_ */

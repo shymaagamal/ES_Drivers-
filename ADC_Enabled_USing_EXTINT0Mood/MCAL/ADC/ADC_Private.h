@@ -1,25 +1,22 @@
 /*
- * ADC_Config.h
+ * ADC_Private.h
  *
- *  Created on: Oct 24, 2023
+ *  Created on: Oct 26, 2023
  *      Author: Shaimaa Gamal
  */
 
-#ifndef MCAL_ADC_ADC_CONFIG_H_
-#define MCAL_ADC_ADC_CONFIG_H_
-
-
+#ifndef MCAL_ADC_ADC_PRIVATE_H_
+#define MCAL_ADC_ADC_PRIVATE_H_
 
 /**********************************************************************************************************
  *                                ADMUX Register
  *********************************************************************************************************/
-
 /*Reference Selection Bit*/
 typedef enum
 {
 	AREF_INTERNAL_VREF_Turned_off=0b00,
 	AVCC_WITH_EXTERNAL_CAPACITOR_AT_AREF_PIN=0b01,
-	Internal_VREF_with_EXTERNAL_Capacitor_AT_AREF_PIN=0b11
+	Internal_VREF_with_EXTERNAL_Capacitor_AT_AREF_PIN=0B11
 
 }REF;
 
@@ -30,19 +27,6 @@ typedef enum
 	LeftAdjustResult=1
 }ADLAR;
 
-/*Analog Channel and gain selection bit*/
-typedef enum
-{
-	ADC0=0b00000,
-	ADC1=0b00001,
-	ADC2=0b00010,
-	ADC3=0b00011,
-	ADC4=0b00100,
-	ADC5=0b00101,
-	ADC6=0b00110,
-	ADC7=0b00111,
-
-}MUX;
 
 /**********************************************************************************************************
  *                                          ADCSRA Register
@@ -50,7 +34,6 @@ typedef enum
 /*ADC Prescaler Selection*/
 typedef enum
 {
-	
 	PreScaler_2=0b001,
 	PreScaler_4=0b010,
 	PreScaler_8=0b011,
@@ -70,7 +53,7 @@ typedef enum
 /*ADC Auto Trigger Enable*/
 typedef enum
 {
-	StopAutoTriggered=0,
+	DisableAutoTriggered=0,
 	AutoTriggered=1
 }ADATE;
 
@@ -83,13 +66,7 @@ typedef enum
 
 }ADSC;
 
-/*ADC Enable*/
-typedef enum
-{
-	ADC_DisAble=0,
-	ADC_EN=1
 
-}ADEN;
 
 /**********************************************************************************************************
  *                                          SFIOR Register
@@ -110,5 +87,4 @@ typedef enum
 
 
 
-
-#endif /* MCAL_ADC_ADC_CONFIG_H_ */
+#endif /* MCAL_ADC_ADC_PRIVATE_H_ */

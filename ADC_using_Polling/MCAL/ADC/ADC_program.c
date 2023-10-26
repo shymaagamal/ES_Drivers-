@@ -22,9 +22,9 @@ void ADC_init()
 
 	ADCSRA_REG->ADIE=disable_INT;               /*ADC Interrupt Enable */
 
-	ADCSRA_REG->ADATE=StopAutoTriggered;  /*ADC Auto Trigger Enable*/
+	ADCSRA_REG->ADATE=AutoTriggered;  /*ADC Auto Trigger Enable*/
 
-	SFIOR_REG->ADTS=FreeRunningMode;      /*ADC Auto Trigger Source*/
+	SFIOR_REG->ADTS=ExternalInterruptRequest0;      /*ADC Auto Trigger Source*/
 
 }
 
@@ -45,9 +45,22 @@ void ADC_startConversionPolling()
 
 void ADC_startConversionINT()
 {
-	ADCSRA_REG->ADIE=EN_INT;
-}
+	ADCSRA_REG->ADSC=startConversion;
 
+
+
+}
+void ADC_setCallBack(void (*callbackPtr)(void))
+{
+	ADCSRA_REG->ADIF=1;
+	ADCSRA_REG->ADIE=EN_INT;
+	if(callback_Ptr_ADC_INT != NULL)
+	{
+		callback_Ptr_ADC_INT = callbackPtr;
+	}
+	ADCSRA_REG->ADSC = 1;
+
+}
 void __vector__16(void)__attribute__((signal));
 void __vector__16()
 {

@@ -12,25 +12,30 @@
 #include "HAL/LCD/lcd.h"
 #include "HAL/LED/LED.h"
 
-
+#include "MCAL/ADC/ADC_interface.h"
 
 uint16 result = 0;
 char data[10];
+uint32 temp;
+void ADC()
+{
+	result = ADC_read_channel();
+	temp=((uint32)result*150*5)/(1023*1.5);
 
+	LCD_writeData('d');
+
+}
 int  main(void)
 {
-	ADC_init();
 	LCD_init();
+	ADC_init();
+	GINT_Enable();
 	ADC_selectChannel(ADC1);
-
+	ADC_setCallBack(ADC);
 
 	while(1)
 	{
-		ADC_startConversionPolling();
-		result = ADC_read_channel();
-		sprintf(data, "%d", result);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString(data);
+
 	}
 
 }

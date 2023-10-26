@@ -15,7 +15,7 @@
 /*******************************************************************************
  *                      Functions Definitions                                  *
  *******************************************************************************/
-
+static uint8 InitFinished = 0;
 
 void LCD_init(void)
 {
@@ -45,7 +45,7 @@ void LCD_init(void)
 
 	_delay_ms(2);
 
-
+	InitFinished = 1;
 }
 
 void LCD_writeCommand(uint8 command)
@@ -58,41 +58,43 @@ void LCD_writeCommand(uint8 command)
 	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN4,GET_BIT(command,7));
 
 	GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_HIGH);/*EN*/
-    _delay_ms(2);
+    _delay_ms(4);
 	GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_LOW);/*EN*/
 
-	 _delay_ms(2);
+	// _delay_ms(4);
 
+	if(InitFinished)
+	{
+		GPIO_SetupPin_Value(PORTB_ID,LCD_PIN1,GET_BIT(command,0));
+		GPIO_SetupPin_Value(PORTB_ID,LCD_PIN2,GET_BIT(command,1));
+		GPIO_SetupPin_Value(PORTB_ID,LCD_PIN3,GET_BIT(command,2));
+		GPIO_SetupPin_Value(PORTB_ID,LCD_PIN4,GET_BIT(command,3));
 
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN1,GET_BIT(command,0));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN2,GET_BIT(command,1));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN3,GET_BIT(command,2));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN4,GET_BIT(command,3));
-
-	GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_HIGH);/*EN*/
-	_delay_ms(2);
-	GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_LOW);/*EN*/
-	_delay_ms(2);
+		GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_HIGH);/*EN*/
+		_delay_ms(4);
+		GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_LOW);/*EN*/
+	}
+	_delay_ms(4);
 }
 void LCD_writeData(uint8 command)
 {
 
 	GPIO_SetupPin_Value(PORTA_ID,LCD_RS_PIN,LOGIC_HIGH);
 
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN1,GET_BIT(command,0));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN2,GET_BIT(command,1));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN3,GET_BIT(command,2));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN4,GET_BIT(command,3));
+	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN1,GET_BIT(command,4));
+	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN2,GET_BIT(command,5));
+	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN3,GET_BIT(command,6));
+	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN4,GET_BIT(command,7));
 
 	GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_HIGH);/*EN*/
     _delay_ms(2);
 	GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_LOW);/*EN*/
 	 _delay_ms(2);
 
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN1,GET_BIT(command,4));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN2,GET_BIT(command,5));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN3,GET_BIT(command,6));
-	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN4,GET_BIT(command,7));
+	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN1,GET_BIT(command,0));
+	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN2,GET_BIT(command,1));
+	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN3,GET_BIT(command,2));
+	GPIO_SetupPin_Value(PORTB_ID,LCD_PIN4,GET_BIT(command,3));
 
 
 	GPIO_SetupPin_Value(PORTA_ID,LCD_EN_PIN,LOGIC_HIGH);/*EN*/
@@ -108,16 +110,16 @@ void LCD_goToRowColumn(uint8 row,uint8 col)
 	switch(row)
 	{
 		case 0:
-				Address=col+0x80;
+				Address=0x80+col;
 				break;
 		case 1:
-				Address=col+0xC0;
+				Address=0xC0+col;
 				break;
 		case 2:
-				Address=col+0x94;
+				Address=0x94+col;
 				break;
 		case 3:
-				Address=col+0xD4;
+				Address=0xD4+col;
 				break;
 	}
 	/* to write to a specific address in the LCD

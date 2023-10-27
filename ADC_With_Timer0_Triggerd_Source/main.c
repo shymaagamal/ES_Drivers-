@@ -15,16 +15,20 @@
 
 uint32 g_tempVal = 0,g_mapVal=0;
 uint8 read[10];
+uint8 count =0;
 
+#define NUM_OF_OVF     63
 /** ============== Callback & Normal functions implementation =============== */
 void readTempSensor(void);
 uint32 map(uint32 x, uint32 x1, uint32 x2, uint32 y1, uint32 y2);
 
-
+void TIM0_ADC();
 int  main(void)
 {
 
 	GINT_Enable();
+
+
 	ADC_init();
 	ADC_selectChannel(ADC1);
 	LCD_init();
@@ -38,15 +42,28 @@ int  main(void)
 	LED_setUpDirection(PORTB_ID, 7, PIN_OUTPUT);
 	LED_OFF(PORTB_ID, 7);
 
-	EXTI_Enable(INT0, NULL, falling_edge);
-	ADC_setCallBackFunction( );
+	ADC_setCallBackFunction(readTempSensor);
+
+	TIM0_init();
+	TIM0_start();
+	TIM0_EnableOVFInterrupt(TIM0_ADC);
 	while(1)
 	{
 
 	}
 
 }
+void TIM0_ADC()
+{
+	count++;
+	if(count==100)
+	{
+		ADC_EnableInterrupt();
+		count=0;
 
+	}
+
+}
 void readTempSensor(void)
 {
 	g_tempVal = ADC_readChannel();

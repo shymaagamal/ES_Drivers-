@@ -14,7 +14,7 @@
 #define FAST_PWM			0
 
 #define COM_MODE   NormalOC0Disconnected
-#define Prescaler	Prescaling_1024
+#define Prescaler	Prescaling_64
 
 
 #endif /* MCAL_TIMER0_TIMER_CONFIG_H_ */

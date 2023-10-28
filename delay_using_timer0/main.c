@@ -21,11 +21,10 @@ int  main(void)
 	LED_setUpDirection(PORTB_ID, 7, PIN_OUTPUT);
 	LED_OFF(PORTB_ID, 7);
 	TIM0_start();
-	TIM0_setPreload(204);
 
 while(1)
 {
-	delay_ms(1);
+	delay_ms(500);
 	LED_Toggle(PORTB_ID,7);
 
 }

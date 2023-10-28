@@ -14,6 +14,8 @@ void TIM0_stop(void);
 void TIM0_start(void);
 void TIM0_setPreload(uint8 preload_Val);
 uint8 TIM0_getVal(void);
+
+/*Its calculated depends on prescaler 64 and FCPU=16MHZ*/
 void delay_ms(uint8 msec);
 void TIM0_EnableOVFInterrupt(void(*CallbackFunction)(void));
 void TIM0_EnableCOMInterrupt(void(*CallbackFunction)(void));

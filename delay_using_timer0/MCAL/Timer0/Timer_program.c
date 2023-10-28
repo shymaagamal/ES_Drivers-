@@ -54,6 +54,8 @@ uint8 TIM0_getVal(void)
 {
 	return TCNT0_REG;
 }
+
+
 void delay_ms(uint8 msec)
 {
 	TIFR_REG->TOV0=1;
@@ -66,9 +68,6 @@ void delay_ms(uint8 msec)
 		TIFR_REG->TOV0=1;
 
 	}
-
-
-
 }
 void TIM0_EnableOVFInterrupt(void(*CallbackFunction)(void))
 {

@@ -39,7 +39,7 @@ int  main(void)
 	LED_OFF(PORTB_ID, 7);
 
 	EXTI_Enable(INT0, NULL, falling_edge);
-	ADC_setCallBackFunction( );
+	ADC_setCallBackFunction(readTempSensor );
 	while(1)
 	{
 

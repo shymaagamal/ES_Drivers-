@@ -8,11 +8,24 @@
 #ifndef MCAL_TIMER1_TIMER1_CONFIG_H_
 #define MCAL_TIMER1_TIMER1_CONFIG_H_
 
+#include "Timer1_private.h"
+#define TIM1_NONPWM 				0
 
-#define NONPWM 				0
+#define TIM1_PHASE_CORRECT		1
 
-#define PHASE_CORRECT		1
+#define TIM1_FAST_PWM			0
 
-#define FAST_PWM			0
+
+
+#define  TIM1_NONPWM_MOOD			TIM1_NormalNONPWM
+
+#define  TIM1_PHASE_CORRECT_MOOD    TIM1_Toggle_OC1A_OnCompareMatchPhasePWM
+
+#define  TIM1_FAST_PWM_MOOD			TIM1_NormalFastPWM
+
+#define TIM1_WGM_MOOD				TIM1_PWMPhaseCorrect10bit
+
+
+#define TIM1_Prescaler	TIM1_Prescaling_8
 
 #endif /* MCAL_TIMER1_TIMER1_CONFIG_H_ */

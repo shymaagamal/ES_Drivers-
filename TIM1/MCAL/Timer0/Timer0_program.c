@@ -7,10 +7,10 @@
 
 
 
-#include "../Timer0/Timer_config.h"
-#include "../Timer0/Timer_interface.h"
-#include "../Timer0/Timer_private.h"
-#include "../Timer0/Timer_registers.h"
+#include "Timer0_config.h"
+#include "Timer0_interface.h"
+#include "Timer0_private.h"
+#include "Timer0_registers.h"
 
 void (*TIM0_callBackOV_ptr)(void) = NULL;
 void (*TIM0_callBackCOMP_ptr)(void) = NULL;
@@ -51,9 +51,13 @@ void TIM0_setPreload(uint8 preload_Val)
 }
 void TIM0_dutyCycle(uint8 dc)
 {
-
-	OCR0_REG=1-(((uint32)dc*255)/100);
-
+#if(COM_MODE==ClearOnCompareMatchFastPWM)
+	//OCR0_REG=(1-(dc/100))*256;
+	OCR0_REG=(1-((uint8)dc/100))*256;
+#elif(COM_MODE==SetOnCompareMatchFastPWM)
+	OCR0_REG=(dc/100)*256;
+#endif
+	OCR0_REG=(1-(dc))*255;
 }
 uint8 TIM0_getVal(void)
 {
@@ -63,14 +67,14 @@ uint8 TIM0_getVal(void)
 
 void delay_ms(uint32 msec)
 {
-	TIFR_REG->TOV0=1;
-	TIMSK_REG->TOIE0=0;
+	TIM0_TIFR_REG->TOV0=1;
+	TIM0_TIMSK_REG->TOIE0=0;
 
 	while(msec--)
 	{
 		TIM0_setPreload(6);
-		while(TIFR_REG->TOV0 != 1);
-		TIFR_REG->TOV0=1;
+		while(TIM0_TIFR_REG->TOV0 != 1);
+		TIM0_TIFR_REG->TOV0=1;
 
 	}
 
@@ -79,8 +83,8 @@ void delay_ms(uint32 msec)
 }
 void TIM0_EnableOVFInterrupt(void(*CallbackFunction)(void))
 {
-	TIFR_REG->TOV0=1;
-	TIMSK_REG->TOIE0=1;
+	TIM0_TIFR_REG->TOV0=1;
+	TIM0_TIMSK_REG->TOIE0=1;
 	if(CallbackFunction !=NULL)
 	{
 		TIM0_callBackOV_ptr=CallbackFunction;
@@ -89,8 +93,9 @@ void TIM0_EnableOVFInterrupt(void(*CallbackFunction)(void))
 }
 void TIM0_EnableCOMInterrupt(void(*CallbackFunction)(void))
 {
-	TIFR_REG->OCF0=1;
-	TIMSK_REG->OCIE0=1;
+	TIM0_TIFR_REG->OCF0=1;
+	TIM0_TIMSK_REG->OCIE0=1;
+	if(CallbackFunction !=NULL)
 	{
 		TIM0_callBackCOMP_ptr=CallbackFunction;
 	}

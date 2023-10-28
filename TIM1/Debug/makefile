@@ -63,7 +63,7 @@ all: TIM1.elf secondary-outputs
 TIM1.elf: $(OBJS) $(USER_OBJS) makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: AVR C Linker'
-	avr-gcc -Wl,-Map,TIM1.map -mmcu=atmega16 -o "TIM1.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	avr-gcc -Wl,-Map,TIM1.map -mmcu=atmega32 -o "TIM1.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -75,7 +75,7 @@ TIM1.lss: TIM1.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 
 sizedummy: TIM1.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
-	-avr-size --format=avr --mcu=atmega16 TIM1.elf
+	-avr-size --format=avr --mcu=atmega32 TIM1.elf
 	@echo 'Finished building: $@'
 	@echo ' '
 

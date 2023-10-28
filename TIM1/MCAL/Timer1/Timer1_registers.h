@@ -15,7 +15,7 @@
  *****************************************************************************************************************************************/
 typedef struct
 {
-	uint8 WGM:2;
+	uint8 WGM:2;     /*WGM10   WGM11*/
 uint8 FOC1B:1;
 uint8 FOC1A:1;
 uint8 COM1B0:1;
@@ -35,7 +35,7 @@ uint8 COM1A1:1;
 typedef struct
 {
 	uint8 CS   :3;
-	uint8 WGM  :2;
+	uint8 WGM  :2;      /*WGM12    WGM13*/
 	uint8      :1;
 	uint8 ICES1:1;
 	uint8 ICNC1:1;
@@ -86,9 +86,9 @@ typedef struct
 	uint8 OCIE1A:1;
 	uint8 TICIE1:1;
 	uint8       :2;
-}TIMSK;
+}TIM1_TIMSK;
 
-#define TIMSK_REG 			((volatile TIMSK *) 0x59)
+#define TIM1_TIMSK_REG 			((volatile TIM1_TIMSK *) 0x59)
 
 /******************************************************************************************************************************************
  *												TIFR Register
@@ -101,8 +101,8 @@ typedef struct
 	uint8 OCF1A :1;
 	uint8 ICF1  :1;
 	uint8       :2;
-}TIFR;
+}TIM1_TIFR;
 
-#define TIFR_REG 			((volatile TIFR *) 0x58)
+#define TIM1_TIFR_REG 			((volatile TIM1_TIFR *) 0x58)
 
 #endif /* MCAL_TIMER1_TIMER1_REGISTERS_H_ */

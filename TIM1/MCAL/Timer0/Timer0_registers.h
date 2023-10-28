@@ -41,9 +41,9 @@ typedef struct
 	uint8 OCIE0:1;
 	uint8  :6;
 
-}TIMSK;
+}TIM0_TIMSK;
 
-#define TIMSK_REG  ((volatile TIMSK *) 0x59)
+#define TIM0_TIMSK_REG  ((volatile TIM0_TIMSK *) 0x59)
 
 /************************************************************************************************
  *									TIFR Register
@@ -54,7 +54,7 @@ typedef struct
 	uint8 TOV0:1;
 	uint8 OCF0:1;
 	uint8  :6;
-}TIFR;
+}TIM0_TIFR;
 
-#define TIFR_REG    ((volatile TIFR *) 0x58)
+#define TIM0_TIFR_REG    ((volatile TIM0_TIFR *) 0x58)
 #endif /* MCAL_TIMER0_TIMER_REGISTERS_H_ */

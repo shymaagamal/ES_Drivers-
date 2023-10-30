@@ -10,7 +10,8 @@ main.o main.o: ../main.c ../MCAL/GINT/GINT_config.h \
   ../MCAL/EXTI/../../LIB/std_types.h \
   ../MCAL/EXTI/../../MCAL/GPIO/GPIO_Config.h ../MCAL/ADC/ADC_interface.h \
   ../MCAL/ADC/../../LIB/BIT_Math.h ../MCAL/ADC/../../LIB/std_types.h \
-  ../HAL/KeyPad/KeyPad.h ../HAL/KeyPad/../../MCAL/GPIO/GPIO_Config.h
+  ../MCAL/Timer1/Timer1_interface.h ../MCAL/Timer1/Timer1_private.h \
+  ../MCAL/Timer1/../../LIB/std_types.h
 
 ../MCAL/GINT/GINT_config.h:
 
@@ -50,6 +51,8 @@ main.o main.o: ../main.c ../MCAL/GINT/GINT_config.h \
 
 ../MCAL/ADC/../../LIB/std_types.h:
 
-../HAL/KeyPad/KeyPad.h:
+../MCAL/Timer1/Timer1_interface.h:
 
-../HAL/KeyPad/../../MCAL/GPIO/GPIO_Config.h:
+../MCAL/Timer1/Timer1_private.h:
+
+../MCAL/Timer1/../../LIB/std_types.h:

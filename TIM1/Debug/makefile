@@ -52,6 +52,12 @@ BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ART
 LSS += \
 TIM1.lss \
 
+FLASH_IMAGE += \
+TIM1.hex \
+
+EEPROM_IMAGE += \
+TIM1.eep \
+
 SIZEDUMMY += \
 sizedummy \
 
@@ -73,6 +79,18 @@ TIM1.lss: TIM1.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+TIM1.hex: TIM1.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+	@echo 'Create Flash image (ihex format)'
+	-avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex TIM1.elf  "TIM1.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+TIM1.eep: TIM1.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
+	@echo 'Create eeprom image (ihex format)'
+	-avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex TIM1.elf  "TIM1.eep"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 sizedummy: TIM1.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 	@echo 'Invoking: Print Size'
 	-avr-size --format=avr --mcu=atmega32 TIM1.elf
@@ -81,10 +99,10 @@ sizedummy: TIM1.elf makefile objects.mk $(OPTIONAL_TOOL_DEPS)
 
 # Other Targets
 clean:
-	-$(RM) $(ELFS)$(OBJS)$(ASM_DEPS)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) TIM1.elf
+	-$(RM) $(FLASH_IMAGE)$(ELFS)$(OBJS)$(ASM_DEPS)$(EEPROM_IMAGE)$(S_DEPS)$(SIZEDUMMY)$(S_UPPER_DEPS)$(LSS)$(C_DEPS) TIM1.elf
 	-@echo ' '
 
-secondary-outputs: $(LSS) $(SIZEDUMMY)
+secondary-outputs: $(LSS) $(FLASH_IMAGE) $(EEPROM_IMAGE) $(SIZEDUMMY)
 
 .PHONY: all clean dependents
 

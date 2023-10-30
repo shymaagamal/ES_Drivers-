@@ -105,9 +105,9 @@ void TIM1_FastPWMMood(COMFastPWM COM)
 		break;
 	case TIM1_ClearOnCompareMatchFastPWM:
 		TCCR1A_REG->COM1A0=0;
-		TCCR1A_REG->COM1B0=0;
+		//TCCR1A_REG->COM1B0=0;
 		TCCR1A_REG->COM1A1=1;
-		TCCR1A_REG->COM1B1=1;
+		//TCCR1A_REG->COM1B1=1;
 		break;
 	case TIM1_SetOnCompareMatchFastPWM:
 		TCCR1A_REG->COM1A0=1;
@@ -184,6 +184,8 @@ void TIM1_phaseCorrectMood(COMPhaseCorrect COM)
 
 void TIM1_init(void)
 {
+//	TCCR1A_REG->FOC1A=0;
+//	TCCR1A_REG->FOC1B=0;
 #if(NONPWM==1)
 	TIM1_NonPWMMood(TIM1_NONPWM_MOOD);
 
@@ -195,7 +197,6 @@ void TIM1_init(void)
 	TIM1_FastPWMMood(TIM1_FAST_PWM_MOOD);
 
 #endif
-
 	TIM1_WGMMood(TIM1_WGM_MOOD);
 }
 
@@ -208,7 +209,7 @@ void TIM1_stop(void)
 
 void TIM1_start(void)
 {
-	TCCR1B_REG->CS=TIM1_Prescaler;
+	TCCR1B_REG->CS=0b010;
 }
 void TIM1_setPreload(uint16 preload_Val)
 {
@@ -217,6 +218,18 @@ void TIM1_setPreload(uint16 preload_Val)
 uint16 TIM1_getVal(void)
 {
 	return TCNT1_REG;
+}
+void TIM1_setICR(uint16 val)
+{
+	ICR1_REG=val;
+}
+void TIM1_dutyCycle_OCRA(uint16 dutyCycle)
+{
+	OCR1A_REG = dutyCycle;
+}
+void TIM1_dutyCycle_OCRB(uint16 dutyCycle)
+{
+	OCR1B_REG=dutyCycle;
 }
 void TIM1_EnableOVFInterrupt(void(*CallbackFunction)(void))
 {
@@ -259,5 +272,31 @@ void TIM1_Enable_ICR_Interrupt(void(*CallbackFunction)(void))
 	}
 }
 
+void __vector_6(void) __attribute__((signal, used));
+void __vector_6(void)		// TIMER1 CAPT
+{
+	TIM1_callBackICR_ptr();
+}
+
+
+void __vector_7(void) __attribute__((signal, used));
+void __vector_7(void)		// TIMER1 COMPA
+{
+	TIM1_callBackOCRA_ptr();
+}
+
+
+void __vector_8(void) __attribute__((signal, used));
+void __vector_8(void)		// TIMER1 COMPB
+{
+	TIM1_callBackOCRB_ptr();
+}
+
+
+void __vector_9(void) __attribute__((signal, used));
+void __vector_9(void)		// TIMER1 OVF
+{
+	TIM1_callBackOV_ptr();
+}
 
 

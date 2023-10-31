@@ -23,7 +23,7 @@
 
 #define  TIM1_FAST_PWM_MOOD			TIM1_ClearOnCompareMatchFastPWM
 
-#define TIM1_WGM_MOOD				TIM1_FASTPWM_ICR1_TOP
+#define TIM1_WGM_MOOD				TIM1_FASTPWM_OCR1A_TOP
 
 
 #define TIM1_Prescaler	TIM1_Prescaling_8

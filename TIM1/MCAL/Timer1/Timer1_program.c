@@ -105,9 +105,9 @@ void TIM1_FastPWMMood(COMFastPWM COM)
 		break;
 	case TIM1_ClearOnCompareMatchFastPWM:
 		TCCR1A_REG->COM1A0=0;
-		//TCCR1A_REG->COM1B0=0;
+		TCCR1A_REG->COM1B0=0;
 		TCCR1A_REG->COM1A1=1;
-		//TCCR1A_REG->COM1B1=1;
+		TCCR1A_REG->COM1B1=1;
 		break;
 	case TIM1_SetOnCompareMatchFastPWM:
 		TCCR1A_REG->COM1A0=1;
@@ -194,7 +194,11 @@ void TIM1_init(void)
 	TIM1_phaseCorrectMood(TIM1_PHASE_CORRECT_MOOD);
 
 #elif(TIM1_FAST_PWM==1)
-	TIM1_FastPWMMood(TIM1_FAST_PWM_MOOD);
+	TCCR1A_REG->COM1A0=0;
+	TCCR1A_REG->COM1B0=0;
+	TCCR1A_REG->COM1A1=1;
+	TCCR1A_REG->COM1B1=1;
+	TIM1_FastPWMMood(TIM1_FAST_PWM_MOOD);/*TIM1_ClearOnCompareMatchFastPWM*/
 
 #endif
 	TIM1_WGMMood(TIM1_WGM_MOOD);
@@ -209,7 +213,7 @@ void TIM1_stop(void)
 
 void TIM1_start(void)
 {
-	TCCR1B_REG->CS=0b010;
+	TCCR1B_REG->CS=0b011;
 }
 void TIM1_setPreload(uint16 preload_Val)
 {

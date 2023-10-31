@@ -28,23 +28,23 @@ int  main(void)
 	LCD_displayString("Sending Data");
 	USART_init();
 
-	uint8 recive[10];
+//	uint8 recive[10];
+	_delay_ms(1000);
+	USART_TX_polling('S');
 	while(1)
 	{
-		/*USART_TX('N');
+		//USART_TX('N');
 
-
-		recive=USART_RX();
-
+	uint8 recive = USART_RX_polling();
 		LCD_goToRowColumn(1, 1);
 		LCD_writeData(recive);
-		*/
+
 		//USART_sendingString("Shaimaa");
 
-		USART_receiveString(recive);
+//		USART_receiveString(recive);
 
-		LCD_goToRowColumn(1, 1);
-		LCD_displayString(rec3x`ive);
+//		LCD_goToRowColumn(1, 1);
+//		LCD_displayString(rec3x`ive);
 
 	}
 }

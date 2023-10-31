@@ -18,26 +18,23 @@
 #undef F_CPU
 #define F_CPU 16000000U
 
-uint16 mapAngle(uint16 angle) {
-    uint16 pulseWidth = (angle * (1750/180) + 750) * 2;
-    return pulseWidth;
-}
 
 int  main(void)
 {
 	TIM1_init();
-	TIM1_setICR(40000);
+	TIM1_setICR(5000);
 	GPIO_SetupPin_Direction(PORTD_ID,5, PIN_OUTPUT);
-	TIM1_dutyCycle_OCRA(1000);
 	TIM1_start();
-//	TIM1_setPreload(0);
+	//TIM1_setPreload(0);
 
-
+	uint16 angle=0;
 	while(1)
 	{
-		//for(uint8 i = 0; i <= 180; i += 10)
 
-			//_delay_ms(100);
+			TIM1_dutyCycle_OCRA(1500);
+			_delay_ms(1000);
+
+
 
 	}
 }

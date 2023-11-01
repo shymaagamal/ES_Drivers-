@@ -52,4 +52,9 @@ uint8 SPI_slaveRecive(void)
 	while(SPSR_REG->SPIF !=1);
 	return SPDR_REG;
 }
-
+uint8 SPI_rx_tx(uint8 data)
+{
+	SPDR_REG=data;
+	while(SPSR_REG->SPIF !=1);
+	return SPDR_REG;
+}

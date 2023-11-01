@@ -16,8 +16,11 @@
 #include"MCAL/Timer0/Timer0_interface.h"
 #include "HAL/KeyPad/KeyPad.h"
 #include "MCAL/SPI/SPI_interface.h"
-
+uint32 g_temp;
+uint8 g_data;
+uint8 count=0;
 void displayStatus(uint8 s);
+void readTemp();
 int  main(void)
 {
 
@@ -28,19 +31,38 @@ int  main(void)
 	TIM1_setICR(5000);
 	TIM1_start();
 
-	SPI_slaveInit();
 
+	GINT_Enable();
+	ADC_selectChannel(ADC1);
+	ADC_init();
+
+
+	SPI_slaveInit();
 	uint8 status=0;
+	GPIO_SetupPin_Direction(PORTB_ID, 1, PIN_OUTPUT);
+	ADC_setCallBackFunction(readTemp);
 	while(1)
 	{
-
 
 		status =SPI_slaveRecive();
 		displayStatus(status);
 
 
 
+
 	}
+}
+void readTemp()
+{
+	if(count==10)
+	{
+		g_temp =ADC_readChannel();
+		g_temp=((uint8)g_temp*150*5)/(1023*1.5);
+
+		GPIO_TogglePin_Value(PORTB_ID, 1);
+		count=0;
+	}
+	count++;
 }
 void displayStatus(uint8 s)
 {
@@ -66,7 +88,14 @@ void displayStatus(uint8 s)
 		TIM1_dutyCycle_OCRA(0);
 		_delay_ms(1000);
 		break;
+	case'T':
+	case't':
+
+		SPI_masterTransmit(g_temp);
+		_delay_ms(1000);
+		break;
 	}
 
 }
+
 

@@ -16,20 +16,22 @@
 #include"MCAL/Timer0/Timer0_interface.h"
 #include "HAL/KeyPad/KeyPad.h"
 #include "MCAL/SPI/SPI_interface.h"
+#include"MCAL/UART/USART_interface.h"
 
-uint8 Data[8]="Shaimaa";
 #define SLAVE1	PORTA_ID, 0
 #define SLAVE2 PORTA_ID, 1
+
+uint8 g_flag_recive_adc=0;
+uint8 recive_tempVal=0;
 void sendStatus(uint8 status);
 
 int  main(void)
 {
-
+	GPIO_SetupPin_Direction(PORTA_ID, 7, PIN_OUTPUT);
 
 	LCD_init();
 	LCD_goToRowColumn(0, 1);
 	SPI_masterInit();
-
 	GPIO_SetupPin_Direction(SLAVE1, PIN_OUTPUT);/*Slave 1*/
 	GPIO_SetupPin_Direction(SLAVE2, PIN_OUTPUT); /*Slave 2*/
 
@@ -151,6 +153,19 @@ void sendStatus(uint8 status)
 		SPI_masterTransmit(status);
 		LCD_goToRowColumn(0, 0);
 		LCD_displayString("Stop The Car");
+		break;
+	case 'T':
+	case 't':
+		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
+		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
+
+		SPI_masterTransmit(status);
+		recive_tempVal=SPI_slaveRecive();
+
+		GPIO_SetupPin_Value(PORTA_ID, 7, LOGIC_HIGH);
+		LCD_goToRowColumn(0, 1);
+		LCD_intgerToString(recive_tempVal);
+
 		break;
 
 

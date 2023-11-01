@@ -13,4 +13,5 @@ void SPI_masterInit(void);
 void SPI_masterTransmit(uint8 data);
 void SPI_slaveInit(void);
 uint8 SPI_slaveRecive(void);
+uint8 SPI_rx_tx(uint8 data);
 #endif /* MCAL_SPI_SPI_INTERFACE_H_ */

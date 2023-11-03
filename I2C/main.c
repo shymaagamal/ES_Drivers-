@@ -128,67 +128,36 @@ void sendStatus(uint8 status)
 		speed=0;
 		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
 		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);/*Send Status to slave 2 */
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("Enter Speed Of Motor from 1 to 9");
-		speed=USART_RX_polling(); /*Waiting User for entering speed of motor*/
-		SPI_masterTransmit(speed);
-
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-		SPI_masterTransmit(status);/*Send Status to slave 1 to stop left dc motor  */
-
-		LCD_clearScreen();
+		SPI_masterTransmit(status);
+		speed=USART_RX_polling();
+		SPI_masterTransmit(speed-48);
 		LCD_goToRowColumn(0, 0);
 		LCD_displayString("Turn Right");
 		break;
 	case 'L':
 	case 'l':
 		speed=0;
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-		SPI_masterTransmit(status);/*Send Status to slave 1 */
-
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("Enter Speed Of Motor from 1 to 9");
-
-		speed=USART_RX_polling();
-		SPI_masterTransmit(speed);/*Waiting User for entering speed of motor*/
-
 		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
 		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);/*Send Status to slave 2 to stop left dc motor  */
-
-		LCD_clearScreen();
+		SPI_masterTransmit(status);
+		speed=USART_RX_polling();
+		SPI_masterTransmit(speed-48);
 		LCD_goToRowColumn(0, 0);
 		LCD_displayString("Turn Left");
-
 		break;
 	case 'W':
 	case 'w':
 		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
 		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);/*Send Status to slave 2 move forward with motor 1*/
-
-
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-		SPI_masterTransmit(status);/*Send Status to slave 1 to move forward with motor 2 */
-
+		SPI_masterTransmit(status);
 		LCD_goToRowColumn(0, 0);
 		LCD_displayString("Move Forward");
-
 		break;
 	case 'S':
 	case 's':
 		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
 		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);/*Send Status to slave 2 stop with motor 1*/
-
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-		SPI_masterTransmit(status);/*Send Status to slave 1 move forward with motor 1*/
-
+		SPI_masterTransmit(status);
 		LCD_goToRowColumn(0, 0);
 		LCD_displayString("Stop The Car");
 		break;
@@ -198,9 +167,9 @@ void sendStatus(uint8 status)
 		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
 
 		SPI_masterTransmit(status);
-
 		recive_tempVal=SPI_slaveRecive();
 
+		GPIO_SetupPin_Value(PORTA_ID, 7, LOGIC_HIGH);
 		LCD_goToRowColumn(0, 1);
 		LCD_intgerToString(recive_tempVal);
 

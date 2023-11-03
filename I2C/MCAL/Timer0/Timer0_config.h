@@ -14,7 +14,7 @@
 #define FAST_PWM			1
 
 #define COM_MODE    ClearOnCompareMatchFastPWM
-#define Prescaler	Prescaling_64
+#define Prescaler	Prescaling_1024
 
 
 #endif /* MCAL_TIMER0_TIMER_CONFIG_H_ */

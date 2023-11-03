@@ -16,13 +16,22 @@
 #include"MCAL/Timer0/Timer0_interface.h"
 #include "HAL/KeyPad/KeyPad.h"
 #include "MCAL/SPI/SPI_interface.h"
-uint32 g_temp;
+uint8 g_temp;
 uint8 g_data;
 uint8 count=0;
+uint8 speed=0;
 void displayStatus(uint8 s);
-void readTemp();
+void moveDcMotor(uint8 s);
 int  main(void)
 {
+	GPIO_SetupPin_Direction(PORTC_ID, 0, PIN_OUTPUT);/*DC Motor*/
+	GPIO_SetupPin_Direction(PORTC_ID, 1, PIN_OUTPUT);
+
+	GPIO_SetupPin_Direction(PORTB_ID, 3, PIN_OUTPUT);/*OC0 Enable of DC Motor to control speed*/
+
+	TIM0_init();/*Used for DC Motor with PWM*/
+	TIM0_start();
+	TIM0_dutyCycle(0);
 
 	GPIO_SetupPin_Direction(PORTD_ID,5, PIN_OUTPUT);/*Servo Motor on OC1A*/
 	GPIO_SetupPin_Direction(PORTD_ID,4, PIN_OUTPUT);/*Servo Motor on OC1B*/
@@ -32,38 +41,25 @@ int  main(void)
 	TIM1_start();
 
 
-	GINT_Enable();
-	ADC_selectChannel(ADC1);
 	ADC_init();
+	ADC_selectChannel(ADC1);
 
 
 	SPI_slaveInit();
+
 	uint8 status=0;
-	GPIO_SetupPin_Direction(PORTB_ID, 1, PIN_OUTPUT);
-	ADC_setCallBackFunction(readTemp);
+
 	while(1)
 	{
 
 		status =SPI_slaveRecive();
 		displayStatus(status);
 
-
-
+		moveDcMotor(status);
 
 	}
 }
-void readTemp()
-{
-	if(count==10)
-	{
-		g_temp =ADC_readChannel();
-		g_temp=((uint8)g_temp*150*5)/(1023*1.5);
 
-		GPIO_TogglePin_Value(PORTB_ID, 1);
-		count=0;
-	}
-	count++;
-}
 void displayStatus(uint8 s)
 {
 	switch(s)
@@ -90,12 +86,49 @@ void displayStatus(uint8 s)
 		break;
 	case'T':
 	case't':
-
+		ADC_startConversionPollingMode();
+		uint8 raw_adc_value=ADC_readChannel();
+		g_temp=((uint8)raw_adc_value*150*5)/(1023*1.5);
 		SPI_masterTransmit(g_temp);
-		_delay_ms(1000);
 		break;
 	}
 
 }
 
+void moveDcMotor(uint8 s)
+{
 
+switch(s)
+{
+case 'L':
+case 'l':
+	speed=0;
+	speed=SPI_slaveRecive();
+	if(speed>= '1' && speed<= '9')
+	{
+		TIM0_dutyCycle(speed*300);
+		GPIO_SetupPin_Value(PORTC_ID, 0, LOGIC_LOW);
+		GPIO_SetupPin_Value(PORTC_ID, 1, LOGIC_HIGH);
+	}
+
+
+	break;
+case 'R':
+case 'r':
+	GPIO_SetupPin_Value(PORTC_ID, 0, LOGIC_HIGH);
+	GPIO_SetupPin_Value(PORTC_ID, 1, LOGIC_HIGH);
+	break;
+case 'W':
+case 'w':
+	TIM0_dutyCycle(1000);
+	GPIO_SetupPin_Value(PORTC_ID, 0, LOGIC_HIGH);
+	GPIO_SetupPin_Value(PORTC_ID, 1, LOGIC_LOW);
+
+	break;
+case 'S':
+case 's':
+	GPIO_SetupPin_Value(PORTC_ID, 0, LOGIC_HIGH);
+	GPIO_SetupPin_Value(PORTC_ID, 1, LOGIC_HIGH);
+	break;
+}
+}

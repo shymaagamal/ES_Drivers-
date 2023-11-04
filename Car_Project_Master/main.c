@@ -198,10 +198,14 @@ void sendStatus(uint8 status)
 		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
 
 		SPI_masterTransmit(status);
-
+        _delay_ms(100);
 		recive_tempVal=SPI_slaveRecive();
 
-		LCD_goToRowColumn(0, 1);
+		SPI_masterTransmit(status);
+		_delay_ms(100);
+		recive_tempVal=SPI_slaveRecive();
+
+		LCD_goToRowColumn(0, 0);
 		LCD_intgerToString(recive_tempVal);
 
 		break;

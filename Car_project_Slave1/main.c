@@ -87,8 +87,9 @@ void displayStatus(uint8 s)
 	case'T':
 	case't':
 		ADC_startConversionPollingMode();
-		uint8 raw_adc_value=ADC_readChannel();
-		g_temp=((uint8)raw_adc_value*150*5)/(1023*1.5);
+		uint16 raw_adc_value = ADC_readChannel();
+		g_temp = (  ((uint32)raw_adc_value * 5000) / 1024 );
+		g_temp/= 10;
 		SPI_masterTransmit(g_temp);
 		break;
 	}
@@ -120,7 +121,7 @@ case 'r':
 	break;
 case 'W':
 case 'w':
-	TIM0_dutyCycle(1000);
+	TIM0_dutyCycle(100);
 	GPIO_SetupPin_Value(PORTC_ID, 0, LOGIC_HIGH);
 	GPIO_SetupPin_Value(PORTC_ID, 1, LOGIC_LOW);
 

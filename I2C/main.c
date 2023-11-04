@@ -18,164 +18,16 @@
 #include "MCAL/SPI/SPI_interface.h"
 #include"MCAL/UART/USART_interface.h"
 
-#define SLAVE1	PORTA_ID, 0
-#define SLAVE2 PORTA_ID, 1
 
-uint8 g_flag_recive_adc=0;
-uint8 recive_tempVal=0;
-uint8 speed=0;
-void sendStatus(uint8 status);
 
 int  main(void)
 {
-	GPIO_SetupPin_Direction(PORTA_ID, 7, PIN_OUTPUT);
 
-	LCD_init();
-	LCD_goToRowColumn(0, 1);
-	SPI_masterInit();
-	GPIO_SetupPin_Direction(SLAVE1, PIN_OUTPUT);/*Slave 1*/
-	GPIO_SetupPin_Direction(SLAVE2, PIN_OUTPUT); /*Slave 2*/
-
-	GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-	GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-	USART_init();
 
 	while(1)
 	{
-		uint8 state = USART_RX_polling();
-		sendStatus(state);
 
-
-	}
-}
-
-void sendStatus(uint8 status)
-{
-	LCD_clearScreen();
-	switch(status)
-	{
-	case 'A':
-	case 'a':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 1);
-		LCD_displayString("Open The front Left door");
-		break;
-
-	case 'B':
-	case 'b':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("close The front Left door");
-		break;
-	case 'C':
-	case 'c':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 1);
-		LCD_displayString("Open The front right door");
-		break;
-	case 'D':
-	case 'd':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("close The front right door");
-		break;
-
-	case 'E':
-	case 'e':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("Open The back left door");
-		break;
-
-	case 'F':
-	case 'f':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("close The back left door");
-		break;
-
-	case 'G':
-	case 'g':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("Open The back right door");
-		break;
-
-	case 'H':
-	case 'h':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("close The back right door");
-		break;
-	case 'R':
-	case 'r':
-		speed=0;
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);
-		speed=USART_RX_polling();
-		SPI_masterTransmit(speed-48);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("Turn Right");
-		break;
-	case 'L':
-	case 'l':
-		speed=0;
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);
-		speed=USART_RX_polling();
-		SPI_masterTransmit(speed-48);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("Turn Left");
-		break;
-	case 'W':
-	case 'w':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("Move Forward");
-		break;
-	case 'S':
-	case 's':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_HIGH);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_LOW);
-		SPI_masterTransmit(status);
-		LCD_goToRowColumn(0, 0);
-		LCD_displayString("Stop The Car");
-		break;
-	case 'T':
-	case 't':
-		GPIO_SetupPin_Value(SLAVE1,LOGIC_LOW);
-		GPIO_SetupPin_Value(SLAVE2, LOGIC_HIGH);
-
-		SPI_masterTransmit(status);
-		recive_tempVal=SPI_slaveRecive();
-
-		GPIO_SetupPin_Value(PORTA_ID, 7, LOGIC_HIGH);
-		LCD_goToRowColumn(0, 1);
-		LCD_intgerToString(recive_tempVal);
-
-		break;
 
 
 	}
 }
-

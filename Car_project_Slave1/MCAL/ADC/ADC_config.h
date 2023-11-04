@@ -39,7 +39,7 @@
  * - To disable the ADC auto trigger -> put (DisableAutoTriggered)
  * - To enable the ADC auto trigger -> put (AutoTriggered)
  */
-#define ADC_AUTO_TRIGGER_ENABLE		AutoTriggered
+#define ADC_AUTO_TRIGGER_ENABLE		DisableAutoTriggered
 
 
 /*
